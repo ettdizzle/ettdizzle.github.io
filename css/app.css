@@ -1,0 +1,123 @@
+.container {
+  margin-top: 40px;
+  padding-bottom: 100px;
+}
+
+.input-form {
+    max-width: 450px;
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+@media (max-width: 767px) {
+    .input-form {
+  max-width: 310px;
+  padding-left: 7px;
+  padding-right: 7px;
+    }
+}
+
+h2 {
+  text-align: center;
+  color: rgb(0, 55, 0);
+}
+
+.instructions {
+  margin-top: 25px;
+  margin-bottom: 30px;
+}
+
+.input-form input, .input-group {
+    max-width: 300px;
+}
+.input-form .form-group {
+    margin: 0;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border-radius: 10px;
+}
+.striped-inputs .form-group:nth-of-type(even) {
+    background-color: #E0E0E0;
+}
+.input-form fieldset legend {
+    margin-bottom: 2px;
+    padding-top: 30px;
+    color: rgb(0, 55, 0);
+    border-bottom-color: rgb(0, 55, 0);
+}
+.input-form fieldset legend.first-legend {
+    padding-top: 0;
+}
+.input-form .input-div {
+    padding-right: 7px;
+}
+.input-form .form-data {
+  text-align: left;
+  padding-left: 12px;
+  padding-bottom: 6px;
+  min-height: 33px;
+}
+
+.input-form label {
+  font-weight: 400;
+}
+
+.input-form .total {
+  font-weight: 700;
+}
+
+.input-group-btn button:focus {
+  outline: 0;
+}
+
+.expand-button, .collapse-button {
+  margin-bottom: 4px;
+  color: rgb(0, 55, 0);
+  font-size: 12px;
+}
+
+.repayment-plan {
+  margin-top: 22px;
+  margin-bottom: 30px;
+}
+
+.repayment-plan h4 {
+  text-decoration: underline;
+  margin-bottom: 4px;
+  margin-left: 10px;
+}
+
+.input-form .repayment-plan .form-group {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.cost-notes {
+  max-height: 20px;
+  margin-left: 4px;
+}
+
+.bottom-info {
+  border-top: 1px dotted black;
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
+.donate {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.disclaimer {
+  margin-top: 15px;
+  text-align: justify;
+}
+
+.about, .contact {
+  margin-top: 15px;
+  text-align: left;
+}
+
+.bottom-info h5 {
+  text-decoration: underline;
+}
