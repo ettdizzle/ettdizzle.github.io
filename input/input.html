@@ -1,0 +1,392 @@
+<form class="form-horizontal input-form" novalidate>
+  <h2>Grad School Cost Calculator</h2>
+  <div class="instructions well well-sm">
+    <h4>Instructions</h4>
+    <ol>
+      <li>Select your prospective school and program (if listed)</li>
+      <li>Adjust the costs</li>
+      <li>Fill in payments you can make during grad school</li>
+      <li>See your total debt and repayment options</li>
+    </ol>
+  </div>
+  <fieldset> 
+  <legend class="first-legend">Program information</legend>
+  <div class="form-group">
+    <label for="school" class="col-sm-4 control-label">School</label>  
+    <div class="col-sm-8 input-div">
+      <select class="form-control" id="school" ng-model="school" ng-change="updateSchool()">
+        <option value="" disabled selected>Select a school</option>
+        <option ng-repeat="school in schools" value="{{school}}">{{school}}</option>
+        <option value="">Other</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="program" class="col-sm-4 control-label">Degree Program</label>  
+    <div class="col-sm-8 input-div">
+      <select class="form-control" id="program" ng-model="program" ng-change="updateProgram()">
+        <option value="" disabled selected>Select a program</option>
+        <option ng-repeat="program in programs" value="{{program}}">{{program}}</option>
+        <option value="">Other</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="years" class="col-sm-4 control-label">Program length</label>  
+    <div class="col-sm-8 input-div">
+      <div class="input-group">
+          <input ng-model="data.years" ng-change="update()" type="number" class="form-control" id="years" placeholder="Program length">
+          <span class="input-group-addon">years</span>
+        </div>
+    </div>
+  </div>
+  </fieldset>
+
+  <fieldset> 
+  <legend>
+    Yearly costs
+    <img class="cost-notes" src="input/Notepad_icon_small.png" ng-show="costNotes" popover="{{costNotes}}" popover-trigger="mouseenter" onclick = "void(0)" popover-append-to-body="true">
+  </legend>
+  <div class="expand-button" ng-show="hideCosts" ng-click="hideCosts = !hideCosts">
+    <span class="glyphicon glyphicon-chevron-down">(expand)</span>
+  </div>
+  <div class="collapse-button" ng-hide="hideCosts" ng-click="hideCosts = !hideCosts">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </div>
+  <div collapse="hideCosts">  
+    <div class="form-group">
+      <label for="tuition" class="col-sm-6 control-label">Tuition</label>
+      <div class="col-sm-6 input-div">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input format="number" pattern="[0-9]*" inputmode="numeric" ng-model="costs.tuition" ng-change="update()" type="text" class="form-control" id="tuition" placeholder="Tuition">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="fees" class="col-sm-6 control-label">Fees</label>
+      <div class="col-sm-6 input-div">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input format="number" pattern="[0-9]*" inputmode="numeric" ng-model="costs.fees" ng-change="update()" type="text" class="form-control" id="fees" placeholder="Fees">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="housing" class="col-sm-6 control-label">Housing & utilities</label>
+      <div class="col-sm-6 input-div">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input format="number" pattern="[0-9]*" inputmode="numeric" ng-model="costs.housing" ng-change="update()" type="text" class="form-control" id="housing" placeholder="Housing & utilities">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="food" class="col-sm-6 control-label">Food</label>
+      <div class="col-sm-6 input-div">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input format="number" pattern="[0-9]*" inputmode="numeric" ng-model="costs.food" ng-change="update()" type="text" class="form-control" id="food" placeholder="Food">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="insurance" class="col-sm-6 control-label">Health insurance</label>
+      <div class="col-sm-6 input-div">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input format="number" pattern="[0-9]*" inputmode="numeric" ng-model="costs.insurance" ng-change="update()" type="text" class="form-control" id="insurance" placeholder="Health insurance">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="books" class="col-sm-6 control-label">Books & supplies</label>
+      <div class="col-sm-6 input-div">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input format="number" pattern="[0-9]*" inputmode="numeric" ng-model="costs.books" ng-change="update()" type="text" class="form-control" id="books" placeholder="Books & supplies">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="personal" class="col-sm-6 control-label">Personal</label>
+      <div class="col-sm-6 input-div">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input format="number" pattern="[0-9]*" inputmode="numeric" ng-model="costs.personal" ng-change="update()" type="text" class="form-control" id="personal" placeholder="Personal">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="transportation" class="col-sm-6 control-label">Transportation</label>
+      <div class="col-sm-6 input-div">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input format="number" pattern="[0-9]*" inputmode="numeric" ng-model="costs.transportation" ng-change="update()" type="text" class="form-control" id="transportation" placeholder="Transportation">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="totalCosts" class="col-sm-6 control-label total">Total annual cost</label>
+    <div class="col-sm-6 input-div">
+      <div id="totalCosts" class="control-label form-data">{{totalCosts | toCurrency }}</div>
+    </div>
+  </div>
+  </fieldset>
+
+  <fieldset> 
+  <legend>Yearly payments</legend>
+  <div class="expand-button" ng-show="hidePayments" ng-click="hidePayments = !hidePayments">
+    <span class="glyphicon glyphicon-chevron-down">(expand)</span>
+  </div>
+  <div class="collapse-button" ng-hide="hidePayments" ng-click="hidePayments = !hidePayments">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </div>
+  <div collapse="hidePayments">  
+    <div class="form-group">
+      <label for="scholarships" class="col-sm-6 control-label">Scholarships</label>
+      <div class="col-sm-6 input-div">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input format="number" pattern="[0-9]*" inputmode="numeric" ng-model="payments.scholarships" ng-change="update()" type="text" class="form-control" id="scholarships" placeholder="Scholarships">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="assistanceships" class="col-sm-6 control-label">Assistanceships</label>
+      <div class="col-sm-6 input-div">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input format="number" pattern="[0-9]*" inputmode="numeric" ng-model="payments.assistanceships" ng-change="update()" type="text" class="form-control" id="assistanceships" placeholder="Assistanceships">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="jobs" class="col-sm-6 control-label">Jobs</label>
+      <div class="col-sm-6 input-div">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input format="number" pattern="[0-9]*" inputmode="numeric" ng-model="payments.jobs" ng-change="update()" type="text" class="form-control" id="jobs" placeholder="Jobs">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="savings" class="col-sm-6 control-label">Savings</label>
+      <div class="col-sm-6 input-div">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input format="number" pattern="[0-9]*" inputmode="numeric" ng-model="payments.savings" ng-change="update()" type="text" class="form-control" id="savings" placeholder="Savings">
+        </div>
+      </div>
+    </div>
+  </div>  
+
+  <div class="form-group">
+    <label for="totalCosts" class="col-sm-6 control-label total">Total annual payments</label>
+    <div class="col-sm-6 input-div">
+      <div id="totalCosts" class="control-label form-data">{{totalPayments | toCurrency }}</div>
+    </div>
+  </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Yearly loans</legend>
+    <div class="expand-button" ng-show="hideLoans" ng-click="hideLoans = !hideLoans">
+      <span class="glyphicon glyphicon-chevron-down">(expand)</span>
+    </div>
+    <div class="collapse-button" ng-hide="hideLoans" ng-click="hideLoans = !hideLoans">
+      <span class="glyphicon glyphicon-chevron-up"></span>
+    </div>
+    <div collapse="hideLoans">  
+      <div class="form-group">
+        <label for="staffordLoans" class="col-sm-6 control-label">Federal Direct Unsubsidized (at {{stafford.interest | toPercent}})</label>
+        <div class="col-sm-6 input-div">
+          <div id="staffordLoans" class="control-label form-data">{{stafford.yearlyAmount | toCurrency}}</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="plusLoans" class="col-sm-6 control-label">Federal PLUS (at {{plus.interest | toPercent}})</label>
+        <div class="col-sm-6 input-div">
+          <div id="plusLoans" class="control-label form-data">{{plus.yearlyAmount | toCurrency}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="totalLoans" class="col-sm-6 control-label total">Loans needed annually</label>
+      <div class="col-sm-6 input-div">
+        <div id="totalLoans" class="control-label form-data">{{totalLoans | toCurrency }}</div>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Debt at graduation</legend>
+    <div class="expand-button" ng-show="hideDebt" ng-click="hideDebt = !hideDebt">
+      <span class="glyphicon glyphicon-chevron-down">(expand)</span>
+    </div>
+    <div class="collapse-button" ng-hide="hideDebt" ng-click="hideDebt = !hideDebt">
+      <span class="glyphicon glyphicon-chevron-up"></span>
+    </div>
+    <div collapse="hideDebt">  
+      <div class="form-group">
+        <label for="staffordLoans" class="col-sm-6 control-label">Federal Direct Unsubsidized (at {{stafford.interest | toPercent}})</label>
+        <div class="col-sm-6 input-div">
+          <div id="staffordLoans" class="control-label form-data">{{stafford.gradDebt | toCurrency}}</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="plusLoans" class="col-sm-6 control-label">Federal PLUS (at {{plus.interest | toPercent}})</label>
+        <div class="col-sm-6 input-div">
+          <div id="plusLoans" class="control-label form-data">{{plus.gradDebt | toCurrency}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="totalLoans" class="col-sm-6 control-label total">Total debt</label>
+      <div class="col-sm-6 input-div">
+        <div id="totalLoans" class="control-label form-data">{{data.gradDebt | toCurrency }}</div>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Repayment plans after graduation</legend>
+    <div class="repayment-plan">
+      <h4>Standard Ten Year</h4>
+      <div class="form-group">
+        <label for="stdMonthly" class="col-sm-6 control-label total">Monthly payment</label>
+        <div class="col-sm-6 input-div">
+          <div id="stdMonthly" class="control-label form-data total">{{repayment.standard.monthly | toCurrency }}</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="stdTotal" class="col-sm-6 control-label">Total payments over life of loan</label>
+        <div class="col-sm-6 input-div">
+          <div id="stdTotal" class="control-label form-data">{{repayment.standard.total | toCurrency }}</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="stdInterest" class="col-sm-6 control-label">Total interest paid</label>
+        <div class="col-sm-6 input-div">
+          <div id="stdInterest" class="control-label form-data">{{repayment.standard.interest | toCurrency }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="repayment-plan">
+      <h4>Extended 25 Year</h4>
+      <div class="form-group">
+        <label for="extdMonthly" class="col-sm-6 control-label total">Monthly payment</label>
+        <div class="col-sm-6 input-div">
+          <div id="extdMonthly" class="control-label form-data total">{{repayment.extended.monthly | toCurrency }}</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="extdTotal" class="col-sm-6 control-label">Total payments over life of loan</label>
+        <div class="col-sm-6 input-div">
+          <div id="extdTotal" class="control-label form-data">{{repayment.extended.total | toCurrency }}</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="extdInterest" class="col-sm-6 control-label">Total interest paid</label>
+        <div class="col-sm-6 input-div">
+          <div id="extdInterest" class="control-label form-data">{{repayment.extended.interest | toCurrency }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="repayment-plan">
+      <h4>Graduated Ten Year</h4>
+      <div class="form-group">
+        <label for="grad10FirstMonth" class="col-sm-6 control-label total">First month's payment</label>
+        <div class="col-sm-6 input-div">
+          <div id="grad10FirstMonth" class="control-label form-data total">{{repayment.graduated10.firstMonthly | toCurrency }}</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="grad10LastMonth" class="col-sm-6 control-label total">Last month's payment</label>
+        <div class="col-sm-6 input-div">
+          <div id="grad10LastMonth" class="control-label form-data total">{{repayment.graduated10.lastMonthly | toCurrency }}</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="grad10Total" class="col-sm-6 control-label">Total payments over life of loan</label>
+        <div class="col-sm-6 input-div">
+          <div id="grad10Total" class="control-label form-data">{{repayment.graduated10.total | toCurrency }}</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="grad10Interest" class="col-sm-6 control-label">Total interest paid</label>
+        <div class="col-sm-6 input-div">
+          <div id="grad10Interest" class="control-label form-data">{{repayment.graduated10.interest | toCurrency }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="repayment-plan">
+      <h4>Graduated 25 Year</h4>
+      <div class="form-group">
+        <label for="grad25FirstMonth" class="col-sm-6 control-label total">First month's payment</label>
+        <div class="col-sm-6 input-div">
+          <div id="grad25FirstMonth" class="control-label form-data total">{{repayment.graduated25.firstMonthly | toCurrency }}</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="grad25LastMonth" class="col-sm-6 control-label total">Last month's payment</label>
+        <div class="col-sm-6 input-div">
+          <div id="grad25LastMonth" class="control-label form-data total">{{repayment.graduated25.lastMonthly | toCurrency }}</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="grad25Total" class="col-sm-6 control-label">Total payments over life of loan</label>
+        <div class="col-sm-6 input-div">
+          <div id="grad25Total" class="control-label form-data">{{repayment.graduated25.total | toCurrency }}</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="grad25Interest" class="col-sm-6 control-label">Total interest paid</label>
+        <div class="col-sm-6 input-div">
+          <div id="grad25Interest" class="control-label form-data">{{repayment.graduated25.interest | toCurrency }}</div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+<div class="bottom-info input-form">
+
+  <div class="donate">
+  <p>
+    If you found this app useful, please consider giving a small donation to support maintaining it and adding new features.
+  </p>
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+      <input type="hidden" name="cmd" value="_s-xclick">
+      <input type="hidden" name="hosted_button_id" value="R2SC77K896M9U">
+      <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+      <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+    </form>
+  </div>
+
+  <div class="about">
+    <h5 ng-click="hideAbout = !hideAbout">About</h5>
+    <div ng-hide="hideAbout">
+      <p>A few years ago my girlfriend applied to master’s programs in public health. As she started receiving acceptance letters and financial aid information, the total costs were still unclear. I built an Excel spreadsheet to calculate the costs of grad school and to estimate the loans she would need to take out. We also calculated how the loans’ interest would accrue, and how she would be able to pay them off.</p>
+      <p>Seeing the total debt and the long road to paying it off informed her decision not to go to grad school.</p>
+      <p>I wanted to convert this spreadsheet into an online tool for anyone to use. Finally I learned enough programming to do it.</p>
+      <p>I used Bootstrap for responsive design and AngularJS for the calculations and DOM manipulation. AngularUI handles dynamic elements on the page. Gordon Zhu’s <a href="http://watchandcode.com/courses/angular-course" target="_blank">Angular Course</a> gave me pointers and confidence to finally tackle this project.</p>
+    </div>
+  </div>
+  
+  <div class="contact">
+    <h5 ng-click="hideContact = !hideContact">Contact</h5>
+    <div ng-hide="hideContact">
+      <p>My name is Andrew Ettenger, and you can reach me at this address: <a ng-href="mailto:{{em}}">{{em}}</a>.</p>
+      <p>I'm available to build new web applications and am open to feedback on this one.</p>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <h5 ng-click="hideDisclaimer = !hideDisclaimer">Disclaimer</h5>
+    <p ng-hide="hideDisclaimer">
+      This tool is meant to help estimate the cost of graduate education in the United States. It is free for anyone to use and comes with no explicit or implicit warranty or guarantee. Use the information at your own risk. Where possible, cost estimates were copied or derived from schools’ public websites. That information is subject to change and could be incomplete. Loan information comes from the federal government’s public websites and is also subject to change and possibly incomplete. The creator(s) and maintainer(s) of this website assume no responsibility or liability for any decisions made using the information and calculations provided on this page.
+    </p>
+  </div>
+</div>
