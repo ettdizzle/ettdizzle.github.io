@@ -47,6 +47,10 @@ inputModule.controller('InputController', ['$scope', '$filter', 'schoolsInfo', f
 				$scope.costs = angular.copy(schoolsInfo.schoolCosts($scope.school));
 				$scope.update();
 			}
+			// Add school-wide cost notes
+			if (schoolsInfo.schoolNotes($scope.school)) {
+				$scope.costNotes = schoolsInfo.schoolNotes($scope.school);
+			}
 		} else {
 			// No school => no programs, no costs
 			$scope.programs = [];
@@ -60,6 +64,10 @@ inputModule.controller('InputController', ['$scope', '$filter', 'schoolsInfo', f
 	$scope.updateProgram = function() {
 		// Reset cost notes
 		$scope.costNotes = null;
+		// But restore if there are school-wide cost notes
+		if ($scope.school && schoolsInfo.schoolNotes($scope.school)) {
+			$scope.costNotes = schoolsInfo.schoolNotes($scope.school);
+		}
 
 		if ($scope.school && $scope.program) {
 			var program = schoolsInfo.programInfo($scope.school, $scope.program);

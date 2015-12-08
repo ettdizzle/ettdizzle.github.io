@@ -1,6 +1,23 @@
 inputModule.factory('schoolsInfo', function() {
     var programDetails = {
+        "Georgetown": {
+            notes: "Personal costs include all living expenses.",
+            costs: {
+                personal: 20296,
+                transportation: 1320              
+            },
+            programs: {
+                "Graduate Arts & Sciences or Biomedical Sciences": {
+                    years: 2,
+                    costs: {
+                        books: 1300,
+                        tuition: 47754                        
+                    }
+                }
+            }
+        },
         "Harvard": {
+            notes: "Costs are for 9 month academic year. Personal costs include food.",
             costs: {
                 housing: 11770,
                 insurance: 1042 + 2390,
@@ -13,6 +30,44 @@ inputModule.factory('schoolsInfo', function() {
                     costs: {
                         fees: 7655,
                         tuition: 61225                        
+                    }
+                }
+            }
+        },
+        "Johns Hopkins": {
+            costs: {                
+                housing: 13970,
+                food: 4500,
+                insurance: 1800,
+                books: 1500,
+                personal: 3000,
+                transportation: 1000
+            },
+            programs: {
+                "MA, SAIS (in DC both years)": {
+                    years: 2,
+                    costs: {
+                        fees: 450,
+                        tuition: 42992                        
+                    }
+                }
+            }
+        },
+        "Tufts": {
+            notes: "Housing and food are for on-campus during the academic year.",
+            costs: {                
+                housing: 5900,
+                food: 3562,
+                insurance: 2451,
+                fees: 756,
+                personal: 2250
+            },
+            programs: {
+                "MALD, Fletcher": {
+                    years: 2,
+                    costs: {
+                        books: 1000,
+                        tuition: 42234                        
                     }
                 }
             }
@@ -90,6 +145,9 @@ inputModule.factory('schoolsInfo', function() {
         },
         schoolCosts: function(schoolName) {
             return programDetails[schoolName]['costs'];
+        },
+        schoolNotes: function(schoolName) {
+            return programDetails[schoolName]['notes'];
         },
         allPrograms: function(schoolName) {
             return Object.keys(programDetails[schoolName]['programs']);
