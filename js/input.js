@@ -207,7 +207,6 @@ inputModule.controller('InputController', ['$scope', '$filter', 'schoolsInfo', f
 		$scope.repayment.graduated25.total = $scope.repayment.graduated25.averageMonthly * 300;
 		$scope.repayment.graduated25.interest = $scope.repayment.graduated25.total - $scope.data.gradDebt;
 
-
     };
 
     $scope.update();

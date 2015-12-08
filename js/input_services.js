@@ -194,7 +194,7 @@ inputModule.directive('format', ['$filter', function ($filter) {
                 if (cursorPointer != elemLength) {
                 	elem[0].setSelectionRange(cursorPointer, cursorPointer);
                 }
-                
+
                 return plainNumber;
             });
         }
